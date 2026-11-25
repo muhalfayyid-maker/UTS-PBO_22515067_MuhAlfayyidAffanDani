@@ -82,3 +82,5 @@ supaya mudah dicoba. Untuk memulai dari data kosong, ubah konstanta
 - Operasi `push` pada stack berjalan otomatis setiap pesanan berhasil disimpan.
 - Class diagram bisa dibuka lewat draw.io (Arrange → Insert → Advanced → Mermaid)
   atau tool lain yang mendukung Mermaid.
+
+> Repository ini dikelola dengan riwayat commit bertahap untuk dokumentasi UTS PBO.
