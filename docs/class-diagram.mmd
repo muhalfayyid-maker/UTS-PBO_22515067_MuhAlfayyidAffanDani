@@ -1,0 +1,109 @@
+classDiagram
+    direction LR
+
+    class Menu {
+        -String kode
+        -String nama
+        -String kategori
+        -double harga
+        -int stok
+        +Menu()
+        +Menu(kode: String, nama: String, kategori: String, harga: double, stok: int)
+        +Menu(kode: String, nama: String, kategori: String, harga: double)
+        +isTersedia() boolean
+        +kurangiStok(jumlah: int) void
+        +tambahStok(jumlah: int) void
+        +tampilkanInfo() void
+    }
+
+    class Pelanggan {
+        -String kode
+        -String nama
+        -String noTelepon
+        -int jumlahPesanan
+        -boolean member
+        +Pelanggan()
+        +Pelanggan(kode: String, nama: String, noTelepon: String)
+        +tambahJumlahPesanan() void
+        +kurangiJumlahPesanan() void
+        +tampilkanInfo() void
+    }
+
+    class ItemPesanan {
+        -Menu menu
+        -int jumlah
+        -double hargaSatuan
+        -String catatan
+        +ItemPesanan()
+        +ItemPesanan(menu: Menu, jumlah: int, catatan: String)
+        +hitungSubtotal() double
+        +tambahJumlah(tambahan: int) void
+        +tampilkanInfo() void
+    }
+
+    class Pesanan {
+        -String kode
+        -Pelanggan pelanggan
+        -int noMeja
+        -String status
+        -ArrayList~ItemPesanan~ daftarItem
+        +Pesanan()
+        +Pesanan(kode: String, pelanggan: Pelanggan, noMeja: int)
+        +tambahItem(menu: Menu, jumlah: int, catatan: String) void
+        +isKosong() boolean
+        +hitungSubtotal() double
+        +hitungPajak() double
+        +hitungTotal() double
+        +ubahStatus(statusBaru: String) void
+        +tampilkanStruk() void
+    }
+
+    class RiwayatPesananStack {
+        -Pesanan[] data
+        -int kapasitas
+        -int top
+        +RiwayatPesananStack(kapasitas: int)
+        +push(pesanan: Pesanan) boolean
+        +pop() Pesanan
+        +peek() Pesanan
+        +isEmpty() boolean
+        +isFull() boolean
+        +size() int
+        +kosongkan() void
+        +tampilkan() void
+    }
+
+    class Restoran {
+        -String nama
+        -String alamat
+        -ArrayList~Menu~ daftarMenu
+        -ArrayList~Pelanggan~ daftarPelanggan
+        -ArrayList~Pesanan~ daftarPesanan
+        -RiwayatPesananStack riwayat
+        -int counterPesanan
+        +Restoran()
+        +Restoran(nama: String, alamat: String)
+        +tambahMenu(menu: Menu) void
+        +tambahPelanggan(pelanggan: Pelanggan) void
+        +cariMenu(kunci: String) ArrayList~Menu~
+        +cariPelanggan(kunci: String) ArrayList~Pelanggan~
+        +buatPesananBaru(pelanggan: Pelanggan, noMeja: int) Pesanan
+        +simpanPesanan(pesanan: Pesanan) void
+        +batalkanPesananTerakhir() Pesanan
+        +hitungTotalPendapatan() double
+        +tampilkanRingkasan() void
+    }
+
+    class Main {
+        +main(args: String[]) void$
+    }
+
+    Restoran o-- "0..*" Menu : menyediakan
+    Restoran o-- "0..*" Pelanggan : melayani
+    Restoran *-- "0..*" Pesanan : mencatat
+    Restoran *-- "1" RiwayatPesananStack : riwayat
+    Pesanan "0..*" --> "1" Pelanggan : dipesan oleh
+    Pesanan *-- "1..*" ItemPesanan : memuat
+    ItemPesanan "0..*" --> "1" Menu : merujuk
+    RiwayatPesananStack o-- "0..5" Pesanan : menyimpan
+    Main ..> Restoran : menggunakan
