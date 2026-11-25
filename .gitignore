@@ -1,0 +1,12 @@
+# hasil kompilasi
+*.class
+bin/
+out/
+
+# file IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
